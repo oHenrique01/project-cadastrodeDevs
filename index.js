@@ -14,6 +14,11 @@ const initButton = document.getElementById("initButton")
         inputTech.type = "text"
         inputTech.className = "input_techOpitions"
         inputTech.placeholder = "Digite sua tecnologia..."
+        inputTech.required = true //Torna o campo obrigatório
+        inputTech.name = "technology"
+        inputTech.id = "technology"
+        inputTech.autocomplete = "off" //Desativa o autocomplete do navegador
+
 
         //Criação de label e input
         const labelExp1 = document.createElement("label")
@@ -43,7 +48,16 @@ const initButton = document.getElementById("initButton")
         inputExperience3.name = "experience"
         inputExperience3.id = "experience3"
 
-        divTech.append(inputTech, inputExperience1, labelExp1, inputExperience2, labelExp2, inputExperience3, labelExp3)
+        //Criação do botão de remover tecnologia
+        const removeButton = document.createElement("button")
+        removeButton.type = "button"
+        removeButton.textContent = "Remover Tecnologia"
+        removeButton.className = "removeButton"
+        removeButton.addEventListener('click', function(){
+        div.removeChild(divTech)    
+        })
+
+        divTech.append(inputTech, inputExperience1, labelExp1, inputExperience2, labelExp2, inputExperience3, labelExp3, removeButton)
         div.appendChild(divTech)
 
         
