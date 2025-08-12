@@ -5,30 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Devs</title>
     <script src="index.js" defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main>
-        <section id="form">
-            <label for="name">Nome: </label>
-            <input type="text" name="name" id="nameDev">
-            <br> <br>
-
-            <button  id="initButton" type="submit">Adicionar técnologia</button>
-        </section>
-        <br> <br>
+    <header>
         
-        <section id="techList">
-            
-        </section>
-        <br> <br>
-        <section id="cadastro">
-            <button id="cadastrar" type="button">Cadastrar</button>
-        </section>
+    </header>
+    <hr>
+    
+    <main>
+        <h1>Exercicio 12 - Cadastro de Devs</h1>
+
+        <div class="form-container">
+
+            <h2>Cadastrar novo Desenvolvedor</h2>
+            <form id="devForm">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="addTechBtn"></label>
+                <br> <br>
+                <button id="addTechBtn" type="button">Adicionar Nova</button>
+                <ul id="stackInputs"></ul>
+                <br>
+                <button id="check" type="submit">Cadastrar</button>
+            </form>
+        </div>
     </main>
-
-    <footer>
-
-    </footer>
 
     
 </body>
