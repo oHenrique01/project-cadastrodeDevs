@@ -8,22 +8,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        
-    </header>
-    <hr>
-    
-    <main>
-        <h1>Exercicio 12 - Cadastro de Devs</h1>
 
+    <main>
         <div class="form-container">
 
             <h2>Cadastrar novo Desenvolvedor</h2>
+            
             <form id="devForm">
                 <label for="name">Nome:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" required placeholder="Digite seu nome completo...">
                 <label for="addTechBtn"></label>
                 <br> <br>
+                <label class="label-tech" for="addTechBtn">Tecnologias:</label>
+                <br>
                 <button id="addTechBtn" type="button">Adicionar Nova</button>
                 <ul id="stackInputs"></ul>
                 <br>

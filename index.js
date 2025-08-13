@@ -6,7 +6,6 @@ let inputCount = 0;
 addTechBtn.addEventListener('click', function(ev){
     ev.preventDefault()
 
-    inputCount++
 
     const nameDev = document.getElementById("name").value
     if(nameDev === "") {
@@ -14,111 +13,138 @@ addTechBtn.addEventListener('click', function(ev){
         return
     } 
 
-    const ul = document.getElementById("stackInputs")
-    const li = document.createElement('li')        
+    const stackInputs = document.getElementById("stackInputs")
+    const newRow = document.createElement('li') 
+    newRow.type = "none"
+    newRow.className = "li-TechAndExp"
+    const rowIndex = inputCount
+    inputCount++       
+    newRow.id = "inputRow-" + rowIndex
 
     //Criando input de tecnologias
+        const techID = `tech-${rowIndex}`
         const techLabel = document.createElement('label')
-        techLabel.textContent = "Tecnologia: "
+        techLabel.htmlFor = techID
 
-        const nameTech = document.createElement('input')
-        nameTech.type = "text"
-        nameTech.placeholder = "Digite a tecnologia..."
-        nameTech.id = `tech${inputCount}-name`
-        techLabel.htmlFor = nameTech.id
+        const techInput = document.createElement('input')
+        techInput.type = "text"
+        techInput.name = "tech"
+        techInput.placeholder = "Digite a tecnologia..."
+        techInput.className = "tech-input"
+        techInput.id = techID
+        
 
     //Criando campo de experiencias
-    const radioName = `exp-${inputCount}`  
+    const expLabel = document.createElement('span')
+    expLabel.innerText = " Experiência:  "
 
-    const labelExp1 = document.createElement('label')
-    labelExp1.textContent = "  0-2 anos "
+    const expTech1ID = `exp1-${rowIndex}`  
 
     const expTech1 = document.createElement('input')
     expTech1.type = "radio"
-    expTech1.id = `experiencia1-${inputCount}`
-    expTech1.name = radioName
-    labelExp1.htmlFor = expTech1.id
+    expTech1.name = "exp-" + rowIndex
+    expTech1.value = "0-2 anos"
+    expTech1.id = expTech1ID
 
-    const labelExp2 = document.createElement('label')
-    labelExp2.textContent = " 3-4 anos "
+    const labelExp1 = document.createElement('label')
+    labelExp1.innerText = "  0-2 anos "
+    labelExp1.htmlFor = expTech1ID
+
+    const expTech2ID = `exp2-${rowIndex}`  
 
     const expTech2 = document.createElement('input')
     expTech2.type = "radio"
-    expTech2.id = `experiencia2-${inputCount}`
-    expTech2.name = radioName
-    labelExp2.htmlFor = expTech2.id
+    expTech2.name = "exp-" + rowIndex
+    expTech2.value = "3-4 anos"
+    expTech2.id = expTech2ID
 
-    const labelExp3 = document.createElement('label')
-    labelExp3.textContent = " +5 anos  "
+    const labelExp2 = document.createElement('label')
+    labelExp2.innerText = "  3-4 anos "
+    labelExp2.htmlFor = expTech2ID
+
+    const expTech3ID = `exp3-${rowIndex}`  
 
     const expTech3 = document.createElement('input')
     expTech3.type = "radio"
-    expTech3.id = `experiencia3-${inputCount}`
-    expTech3.name = radioName
-    labelExp3.htmlFor = expTech3.id
+    expTech3.name = "exp-" + rowIndex
+    expTech3.value = "+5 anos"
+    expTech3.id = expTech3ID
+
+    const labelExp3 = document.createElement('label')
+    labelExp3.innerText = "  +5 anos "
+    labelExp3.htmlFor = expTech3ID
+
 
     //Criando botão remover tecnologia
         const removeTechBtn = document.createElement('button')
         removeTechBtn.type = "button"
         removeTechBtn.textContent = " Excluir "
+        removeTechBtn.className = "btn-removeTech"
         removeTechBtn.addEventListener('click', function(){
-            li.remove()
+            newRow.remove()
         })
         
-        li.append(techLabel, nameTech, 
+        newRow.append(techLabel, techInput, 
+            expLabel,
             expTech1, labelExp1 ,
             expTech2, labelExp2,
             expTech3, labelExp3,
             removeTechBtn)
-        ul.appendChild(li)
 
+        stackInputs.appendChild(newRow)
 })
 
-const registerDev = document.getElementById("check")
-registerDev.addEventListener('click', function(ev){
+devForm.addEventListener('submit', function(ev){
     ev.preventDefault()
 
-    const nameDev = document.getElementById("name").value
-    if(nameDev === ""){
-        alert("Por favor preencha seu nome.")
+  const devNameInput = document.getElementById('name')
+  const devName = devNameInput.value.trim()
+
+  if (!devName) {
+    alert('Informe o nome do desenvolvedor.')
+    return
+  }
+
+  const stackInputs = document.getElementById('stackInputs')
+  const techRows = stackInputs.querySelectorAll('li')
+
+  if (techRows.length === 0) {
+    alert('Adicione pelo menos uma tecnologia.')
+    return
+  }
+
+  const devList = []
+
+  techRows.forEach(function (row) {
+    const techName = row.querySelector("input[name='tech']").value.trim()
+    const selectedExp = row.querySelector("input[type='radio']:checked")
+
+    if (!techName) {
+      alert('Informe a tecnologia.')
+      return
     }
 
-    const stackInputs = document.getElementById('stackInputs')
-    if(stackInputs.length === 0) {
-        alert("Adicione pelo menos uma tecnologia.")
+    if (!selectedExp) {
+      alert('Informe seu tempo de experiência.')
+      return
     }
 
-    const devList = []
+    devList.push({
+      name: devName,
+      tech: techName,
+      exp: selectedExp.value
+    })
+  })
 
-    const techItens = stackInputs.querySelectorAll('li')
-    techItens.forEach(item => {
-        const nameTech = item.querySelector('input[type="text"]').value
-        if(nameTech === ""){
-            alert("Adicione pelo menos uma tecnologia.")
-            return
-        }
-        const selectedExp = item.querySelector('input[type="radio"]:checked')
-        if(!selectedExp){
-            alert("Informe seu temopo de experiência.")
-            return
-        }
+  developers.push(...devList)
 
-        const expTime = selectedExp.value
-        
-        devList.push({
-            tecnologia: nameTech,
-            experiencia: expTime
-        })
+  console.log('--- Lista de Desenvolvedores ---')
+  devList.forEach(dev => {
+    console.log(`Desenvolvedor: ${dev.name} | Tecnologia: ${dev.tech} | Experiência: ${dev.exp}`)
+  })
 
-        developers.push({
-            nome: nameDev,
-            tecnologias: devList
-        })
-
-
-        console.log(developers)
-    });
-    
+  devNameInput.value = ''
+  stackInputs.innerHTML = ''
 })
 
 
